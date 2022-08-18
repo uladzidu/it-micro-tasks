@@ -1,0 +1,46 @@
+.test-app-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.firstCounter-wrapper, .secondCounter-wrapper {
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    padding: 150px;
+    border: solid cadetblue 2px;
+}
+
+.MaxValue{
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn1 {
+    margin-left: 10px;
+    padding: 15px;
+}
+
+.btn2 {
+    padding: 15px;
+}
+
+.maxValue {
+    color: red;
+}
+
+.incorrectValue {
+    background-color: #E44D2E;
+}
+
+.correctValue {
+    background-color: lightcyan;
+}
+
