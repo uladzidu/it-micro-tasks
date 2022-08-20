@@ -1,4 +1,10 @@
-import {counterReducer, incrementValueAC, resetValueAC, setStartValueAC} from "./reducers/counterReducer";
+import {
+    counterReducer,
+    incrementValueAC,
+    resetValueAC,
+    setMaxValueAC,
+    setStartValueAC
+} from "./reducers/counterReducer";
 
 let initState: initStateType
 
@@ -6,7 +12,10 @@ export type initStateType = {
     startValue: number
     maxValue: number
     valueForInc: number
-    error: string
+    errorForStartValue: string | null
+    errorForMaxValue: string | null
+    localValue : number
+    localMaxValue : number
 }
 
 beforeEach(() => {
@@ -14,7 +23,10 @@ beforeEach(() => {
         startValue: 2,
         maxValue: 5,
         valueForInc: 3,
-        error: '',
+        errorForStartValue: '',
+        errorForMaxValue: '',
+        localValue : 0,
+        localMaxValue : 0,
     }
 })
 
@@ -24,7 +36,7 @@ test('first test', () => {
 
 })
 
-test( 'increment value ', () => {
+test( 'increment value', () => {
 
    const resultState = counterReducer( initState, incrementValueAC() )
 
@@ -45,6 +57,14 @@ test( 'set start value', () => {
     const resultState = counterReducer( initState, setStartValueAC(5) )
 
     expect( resultState.startValue ).toBe(5)
+
+} )
+
+test( 'set Max Value' , () => {
+
+    const resultState = counterReducer( initState, setMaxValueAC(10) )
+
+    expect(resultState.maxValue).toBe(10)
 
 } )
 
