@@ -32,14 +32,14 @@ const App = () => {
         <div>
             <div className={'test-app-wrapper'}>
 
-                <FirstCounter setStartValueHandler = {setStartValueHandler}
-                              setMaxValueHandler = {setMaxValueHandler}
-                              setErrorForStartValue = {setErrorForStartValue}
-                              setErrorForMaxValue = {setErrorForMaxValue}
-                              errorForStartValue = {errorForStartValue}
-                              errorForMaxValue = {errorForMaxValue}
+                {/*<FirstCounter setStartValueHandler = {setStartValueHandler}*/}
+                {/*              setMaxValueHandler = {setMaxValueHandler}*/}
+                {/*              setErrorForStartValue = {setErrorForStartValue}*/}
+                {/*              setErrorForMaxValue = {setErrorForMaxValue}*/}
+                {/*              errorForStartValue = {errorForStartValue}*/}
+                {/*              errorForMaxValue = {errorForMaxValue}*/}
 
-                />
+                {/*/>*/}
 
                 <SecondCounter startValue={startValue}
                                maxValue = {maxValue}

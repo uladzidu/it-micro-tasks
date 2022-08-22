@@ -4,8 +4,8 @@ export type initStateType = {
     valueForInc: number
     errorForStartValue: string | null
     errorForMaxValue: string | null
-    localValue : number
-    localMaxValue : number
+    localValue: number
+    localMaxValue: number
 }
 export type counterReducerAT =
     ReturnType<typeof incrementValueAC>
@@ -14,13 +14,14 @@ export type counterReducerAT =
     | ReturnType<typeof setMaxValueAC>
     | ReturnType<typeof setErrorForStartValueAC>
     | ReturnType<typeof setErrorForMaxValueAC>
+    | ReturnType<typeof setLocalValueAC>
 
 const initState: initStateType = {
-    startValue: 5,
+    startValue: 0,
     maxValue: 0,
     valueForInc: 2,
-    localValue : 0,
-    localMaxValue : 0,
+    localValue: 0,
+    localMaxValue: 0,
     errorForStartValue: '',
     errorForMaxValue: '',
 }
@@ -56,13 +57,19 @@ export const counterReducer = (state: initStateType = initState, action: counter
         case "SET-ERROR-FOR-START-VALUE": {
             return {
                 ...state,
-                errorForStartValue : action.value
+                errorForStartValue: action.value
             }
         }
         case "SET-ERROR-FOR-MAX-VALUE" : {
             return {
                 ...state,
-                errorForMaxValue : action.value
+                errorForMaxValue: action.value
+            }
+        }
+        case "SET-LOCAL-VALUE": {
+            return {
+                ...state,
+                localValue : action.value
             }
         }
         default : {
@@ -77,38 +84,39 @@ export const incrementValueAC = () => {
         type: 'INCREMENT-VALUE'
     } as const
 }
-
 export const resetValueAC = (value: number) => {
     return {
         type: 'RESET-VALUE',
         value
     } as const
 }
-
 export const setStartValueAC = (value: number) => {
     return {
         type: 'SET-START-VALUE',
         value
     } as const
 }
-
 export const setMaxValueAC = (value: number) => {
     return {
         type: 'SET-MAX-VALUE',
         value
     } as const
 }
-
 export const setErrorForStartValueAC = (value: string | null) => {
     return {
         type: 'SET-ERROR-FOR-START-VALUE',
         value
     } as const
 }
-
 export const setErrorForMaxValueAC = (value: string | null) => {
     return {
         type: 'SET-ERROR-FOR-MAX-VALUE',
+        value
+    } as const
+}
+export const setLocalValueAC = (value: number) => {
+    return {
+        type: 'SET-LOCAL-VALUE',
         value
     } as const
 }

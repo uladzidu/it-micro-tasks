@@ -1,34 +1,36 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Button} from "../firstCounter/Components/Button";
 import {Input} from "./Components/Input";
 import '../testMonday.css'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     setErrorForMaxValueAC,
-    setErrorForStartValueAC,
+    setErrorForStartValueAC, setLocalValueAC,
     setMaxValueAC,
     setStartValueAC
 } from "../reducers/counterReducer";
+import {storeType} from "../reducers/store";
 
 export type FirstCounterPropsType = {
-    // setStartValueHandler: (value: number) => void
-    setMaxValueHandler: (value: number) => void
-    setErrorForMaxValue?: Dispatch<SetStateAction<string | null>>
-    setErrorForStartValue?: Dispatch<SetStateAction<string | null>>
     errorForStartValue: string | null
     errorForMaxValue: string | null
 }
 
 export const FirstCounter = (props: FirstCounterPropsType) => {
 
-    const [localValue, setLocalValue] = useState(0)
+    // const [localValue, setLocalValue] = useState(0)
     const [localMaxValue, setLocalMaxValue] = useState(0)
 
+    const localValue = useSelector<storeType,number>(state => state.counterReducer.localValue)
+
     const dispatch = useDispatch()
+    // const errorForStartValue = useSelector<storeType,string|null>(state =>state.counterReducer.errorForStartValue )
+    // const errorForMaxValue = useSelector<storeType,string|null>(state =>state.counterReducer.errorForMaxValue )
+
 
     const setValuesToLS = () => {
-        localStorage.setItem('localValue' , JSON.stringify(localValue))
-        localStorage.setItem('localMaxValue' , JSON.stringify(localMaxValue))
+        localStorage.setItem('localValue', JSON.stringify(localValue))
+        localStorage.setItem('localMaxValue', JSON.stringify(localMaxValue))
     }
 
     const getValuesFromLS = () => {
@@ -36,20 +38,25 @@ export const FirstCounter = (props: FirstCounterPropsType) => {
         let maxVal = localStorage.getItem('localMaxValue')
 
         if (startVal) {
-            setLocalValue(JSON.parse(startVal))
+            // setLocalValue(JSON.parse(startVal))
+            dispatch(setLocalValueAC(JSON.parse(startVal)))
         }
         if (maxVal) {
             setLocalMaxValue(JSON.parse(maxVal))
+            // dispatch(setMaxValueAC(JSON.parse(maxVal)))
         }
     }
 
-    window.onload = getValuesFromLS
+    // window.onload = getValuesFromLS
+
+    useEffect(getValuesFromLS, [dispatch])
 
     const startValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
 
         if (+e.currentTarget.value >= 0) {
             if (+e.currentTarget.value < localMaxValue) {
-                setLocalValue(+e.currentTarget.value)
+                // setLocalValue(+e.currentTarget.value)
+                dispatch(setLocalValueAC(+e.currentTarget.value))
                 dispatch(setErrorForStartValueAC('Set Values'))
 
             } else {
@@ -59,7 +66,8 @@ export const FirstCounter = (props: FirstCounterPropsType) => {
         } else {
             dispatch(setErrorForStartValueAC('Incorrect value'))
         }
-        setLocalValue(+e.currentTarget.value);
+        // setLocalValue(+e.currentTarget.value)
+        dispatch(setLocalValueAC(+e.currentTarget.value))
     }
 
     const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +75,8 @@ export const FirstCounter = (props: FirstCounterPropsType) => {
         if (+e.currentTarget.value >= 0) {
             if (+e.currentTarget.value > localValue) {
                 setLocalMaxValue(+e.currentTarget.value)
+                // dispatch(setMaxValueAC(+e.currentTarget.value))
+
                 dispatch(setErrorForMaxValueAC('Set Values'))
             } else {
                 dispatch(setErrorForStartValueAC('Incorrect value'))
@@ -79,10 +89,8 @@ export const FirstCounter = (props: FirstCounterPropsType) => {
     }
 
     const buttonHandler = () => {
-        // props.setStartValueHandler(localValue)
-        // props.setMaxValueHandler(localMaxValue)
-        dispatch( setStartValueAC(localValue) )
-        dispatch( setMaxValueAC(localMaxValue) )
+        dispatch(setStartValueAC(localValue))
+        dispatch(setMaxValueAC(localMaxValue))
 
         dispatch(setErrorForStartValueAC(null))
         dispatch(setErrorForMaxValueAC(null))
@@ -91,7 +99,6 @@ export const FirstCounter = (props: FirstCounterPropsType) => {
 
     const maxInputClassName = props.errorForMaxValue === 'Incorrect value' ? 'incorrectValue' : 'correctValue'
     const startInputClassName = props.errorForStartValue === 'Incorrect value' ? 'incorrectValue' : 'correctValue'
-
 
     return (
 

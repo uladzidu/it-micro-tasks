@@ -2,6 +2,8 @@ import React from 'react';
 import Number from "./Components/Number";
 import '../testMonday.css'
 import {Button} from "./Components/Button";
+import {useSelector} from "react-redux";
+import {storeType} from "../reducers/store";
 
 
 export type SecondCounterPropsType = {
@@ -13,9 +15,13 @@ export type SecondCounterPropsType = {
     errorForMaxValue: string | null
 }
 
-export const SecondCounter = (props: SecondCounterPropsType) => {
+    export const SecondCounter = (props: SecondCounterPropsType) =>
+{
 
-    const buttonResetDisabled = props.errorForStartValue === 'SET VALUES' || props.errorForMaxValue === 'SET VALUES'
+    const errorForStartValue = useSelector<storeType, string | null>(state => state.counterReducer.errorForStartValue)
+    const errorForMaxValue = useSelector<storeType, string | null>(state => state.counterReducer.errorForMaxValue)
+
+    const buttonResetDisabled = errorForStartValue === 'SET VALUES' || errorForMaxValue === 'SET VALUES'
     const buttonIncDisabled = props.startValue === props.maxValue
         || props.errorForStartValue === 'SET VALUES'
         || props.errorForMaxValue === 'SET VALUES'
@@ -47,4 +53,5 @@ export const SecondCounter = (props: SecondCounterPropsType) => {
             </div>
         </div>
     );
-};
+}
+;
