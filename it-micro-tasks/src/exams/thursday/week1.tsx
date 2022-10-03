@@ -17,8 +17,7 @@ const instance = axios.create({
 
 const photosAPI = {
     getPhotos(page: number) {
-        // return instance.get<PhotoType[]>(`photos?_limit=2?_page${page}`)
-        return instance.get<PhotoType[]>(`photos?_page${page}&_limit=2`)
+        return instance.get<PhotoType[]>(`photos?_limit=2?_page${page}`)
     }
 }
 // App
@@ -37,11 +36,13 @@ export const App = () => {
         photosAPI.getPhotos(currentPage)
             .then((res) => {
                 setPhotos(res.data)
+                console.log(currentPage)
             })
     }, [currentPage])
 
     const setPageHandler = (page: number) => {
         setCurrentPage(page)
+
     };
 
     return (
